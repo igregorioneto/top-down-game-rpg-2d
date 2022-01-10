@@ -17,10 +17,13 @@ public class PlayerAnim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        onMovie();
+        onMove();
+        onRuning();
     }
 
-    void onMovie()
+    #region Moviment
+
+    void onMove()
     {
         if(player.direction.magnitude > 0)
         {
@@ -42,4 +45,14 @@ public class PlayerAnim : MonoBehaviour
             transform.eulerAngles = new Vector2(0, 180);
         }
     }
+
+    void onRuning()
+    {
+        if(player.isRunning)
+        {
+            anim.SetInteger("transition", 2);
+        }
+    }
+
+    #endregion
 }
