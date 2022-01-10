@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
 
     private float initialSpeed;
     private bool _isRunning;
+    private bool _isRolling;
 
     private Rigidbody2D rig;
     private Vector2 _direction;
@@ -21,6 +22,11 @@ public class Player : MonoBehaviour
     public bool isRunning
     {
         get { return _isRunning; } set { _isRunning = value; }
+    }
+
+    public bool isRolling
+    {
+        get { return _isRolling; } set { _isRolling = value; }
     }
 
 
@@ -36,6 +42,7 @@ public class Player : MonoBehaviour
     {
         onInput();
         onRun();
+        onRolling();
     }
 
     private void FixedUpdate()
@@ -68,6 +75,21 @@ public class Player : MonoBehaviour
             speed = initialSpeed;
             _isRunning = false;
         } 
+    }
+
+    void onRolling()
+    {
+        if(Input.GetMouseButtonDown(1))
+        {
+            speed = runSpeed;
+            _isRolling = true;
+        }
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            speed = initialSpeed;
+            _isRolling = false;
+        }
     }
 
     #endregion
