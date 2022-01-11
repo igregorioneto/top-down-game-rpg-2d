@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 [CreateAssetMenu(fileName = "New Dialogue", menuName = "New Dialog/Dialogue")]
 public class DialogSettings : ScriptableObject
@@ -30,3 +31,35 @@ public class Languages
     public string english;
     public string spanish;
 }
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(DialogSettings))]
+public class BuilderEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+
+        DialogSettings ds = (DialogSettings)target;
+
+        Languages l = new Languages();
+        l.portuguese = ds.sentence;
+
+        Sentences s = new Sentences();
+        s.profile = ds.speakerSprite;
+        s.sentence = l;
+
+        if(GUILayout.Button("Create Dialogue"))
+        {
+            if(ds.sentence != "")
+            {
+                ds.dialogues.Add(s);
+
+                ds.speakerSprite = null;
+                ds.sentence = "";
+            }
+        }
+    }
+}
+
+#endif
